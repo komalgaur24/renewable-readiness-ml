@@ -617,7 +617,7 @@ with tab5:
         "📈 Moderate":  dict(gdp=.03,urban=.005,elec=.01,renew=.025,energy=.005),
         "🐢 Pessimistic":dict(gdp=.01,urban=.002,elec=.005,renew=.01,energy=.002)}[sc]
 
-   def project(row,yrs,gr):
+    def project(row,yrs,gr):
         g=np.expm1(row["log_gdp_per_capita"])*(1+gr["gdp"])**yrs
         u=min(row["urban_population_pct"]+gr["urban"]*yrs*100,100)
         e=min(row["electricity_access_pct"]+gr["elec"]*yrs*100,100)
