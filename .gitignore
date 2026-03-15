@@ -2,10 +2,7 @@ venv/
 __pycache__/
 *.pyc
 *.pyo
-.env
 models/*.pkl
-data/raw/*.csv
 data/plots/
-.streamlit/
 *.egg-info/
 .DS_Store

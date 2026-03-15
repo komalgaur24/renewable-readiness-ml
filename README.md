@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 🌍 Renewable Energy Adoption Readiness Score
 
 An end-to-end Machine Learning system that predicts how ready a country is to adopt renewable energy.
@@ -114,3 +115,6 @@ MONGO_URI=mongodb://localhost:27017/
 MONGO_DB=renewable_readiness
 ```
 
+=======
+# renewable-readiness-ml
+>>>>>>> 759a7fc3bf113a3878625460e81bd226a92a53f6
