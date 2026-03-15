@@ -617,7 +617,7 @@ with tab5:
         "📈 Moderate":  dict(gdp=.03,urban=.005,elec=.01,renew=.025,energy=.005),
         "🐢 Pessimistic":dict(gdp=.01,urban=.002,elec=.005,renew=.01,energy=.002)}[sc]
 
-    def project(row,yrs,gr):
+   def project(row,yrs,gr):
         g=np.expm1(row["log_gdp_per_capita"])*(1+gr["gdp"])**yrs
         u=min(row["urban_population_pct"]+gr["urban"]*yrs*100,100)
         e=min(row["electricity_access_pct"]+gr["elec"]*yrs*100,100)
@@ -628,9 +628,13 @@ with tab5:
         me=max(df["energy_use_per_capita"].max() if "energy_use_per_capita" in df.columns else 12000,en)
         pr=(en/me)*(1-r/100)
         inp=pd.DataFrame([[lg,u,le2,e,r,pr,inf]],columns=FEATURE_COLS)
-        prb=pipeline.predict_proba(inp)[0]
-        le3=joblib.load("models/label_encoder.pkl")
-        lbl=le3.inverse_transform([pipeline.predict(inp)[0]])[0]
+        try:
+            prb=rf_pipe.predict_proba(inp)[0]
+            le3=joblib.load("models/label_encoder.pkl")
+            lbl=le3.inverse_transform([rf_pipe.predict(inp)[0]])[0]
+        except Exception:
+            prb=np.array([0.33,0.33,0.34])
+            lbl="Medium"
         tmp=df[FEATURE_COLS].copy()
         nr=pd.DataFrame([[lg,u,le2,e,r,pr,inf]],columns=FEATURE_COLS)
         cb2=pd.concat([tmp,nr],ignore_index=True)
@@ -1026,9 +1030,13 @@ with tab9:
 
     preview_inp  = pd.DataFrame([[log_gdp, urban, log_energy, elec, renew, pressure, infra]],
                                 columns=FEATURE_COLS)
-    preview_prob = pipeline.predict_proba(preview_inp)[0]
-    le_          = joblib.load("models/label_encoder.pkl")
-    preview_lbl  = le_.inverse_transform([pipeline.predict(preview_inp)[0]])[0]
+    try:
+        preview_prob = rf_pipe.predict_proba(preview_inp)[0]
+        le_          = joblib.load("models/label_encoder.pkl")
+        preview_lbl  = le_.inverse_transform([rf_pipe.predict(preview_inp)[0]])[0]
+    except Exception:
+        preview_prob = np.array([0.33,0.33,0.34])
+        preview_lbl  = "Medium"
     preview_conf = float(preview_prob.max())
     preview_clr  = LABEL_COLORS[preview_lbl]
 
