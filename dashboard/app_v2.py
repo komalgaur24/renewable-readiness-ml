@@ -895,7 +895,7 @@ Renewable:    {rr['renewable_share_pct']:.1f}%
 Urban Pop:    {rr['urban_population_pct']:.1f}%
 
 FEATURE SCORES (0-100)
-{chr(10).join(["  " + c.replace('_',' ').replace('log ','').title().ljust(35) + " " + str(round(fn[c],1)) for c in FEATURE_COLS])}
+{chr(10).join(["  " + c.replace("_"," ").replace("log ","").title().ljust(35) + " " + str(round(fn[c],1)) for c in FEATURE_COLS])}
 
 SUMMARY
 {('STRONG: Well-positioned for renewable transition.') if rl=='High' else
