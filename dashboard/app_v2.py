@@ -513,7 +513,7 @@ with tab4:
                         index=cl.index("Germany") if "Germany" in cl else 0,key="ba")
     with b2:
         st.markdown(f"<div style='text-align:center;padding-top:26px;"
-                    f"font-family:\"{T['font']}\",monospace;font-size:1.5rem;"
+                    "font-family:'" + T['font'] + "',monospace;font-size:1.5rem;"
                     f"font-weight:900;color:{T['accent2']};'>VS</div>",
                     unsafe_allow_html=True)
     with b3:
@@ -841,7 +841,7 @@ with tab7:
         </div>
       </div>
       <div style='display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;'>
-        {''.join([f"<div style='background:{T['bg3']};border-radius:8px;padding:10px;text-align:center;'><div style='font-size:.6rem;color:{muted_color};text-transform:uppercase;letter-spacing:1px;'>{lbl}</div><div style='font-size:1rem;font-weight:700;color:{clr};font-family:\"{T['font']}\",monospace;'>{val}</div></div>" for lbl,val,clr in [
+        {''.join(["<div style='background:" + T['bg3'] + ";border-radius:8px;padding:10px;text-align:center;'><div style='font-size:.6rem;color:" + muted_color + ";text-transform:uppercase;letter-spacing:1px;'>" + lbl + "</div><div style='font-size:1rem;font-weight:700;color:" + clr + ";font-family:" + T['font'] + ",monospace;'>" + val + "</div></div>" for lbl,val,clr in [
             ("GDP/Capita",f"${np.expm1(rr['log_gdp_per_capita']):,.0f}",T["accent2"]),
             ("Electricity",f"{rr['electricity_access_pct']:.1f}%",T["accent1"]),
             ("Renewable",f"{rr['renewable_share_pct']:.1f}%",T["accent1"]),
