@@ -877,32 +877,36 @@ with tab7:
                         background:linear-gradient(90deg,{bc3}88,{bc3});'></div>
           </div>
         </div>""",unsafe_allow_html=True)
-    report_txt=f"""
-================================================================================
-  RENEWABLE ENERGY READINESS REPORT — {rc.upper()}
-  Generated: {datetime.now().strftime('%B %d, %Y')} | Theme: {chosen_theme}
-================================================================================
-Country:      {rc}
-Score:        {rr['readiness_score']:.1f}/100
-Readiness:    {rl}
-Global Rank:  #{rnk} of {len(df)}
-Confidence:   {rr['prediction_confidence']*100:.0f}%
+    feature_lines = ""
+    for c in FEATURE_COLS:
+        feature_lines += "  " + c.replace("_"," ").replace("log ","").title().ljust(35) + " " + str(round(fn[c],1)) + "\n"
 
-INDICATORS
-GDP/Capita:   ${np.expm1(rr['log_gdp_per_capita']):,.0f}
-Electricity:  {rr['electricity_access_pct']:.1f}%
-Renewable:    {rr['renewable_share_pct']:.1f}%
-Urban Pop:    {rr['urban_population_pct']:.1f}%
+    if rl == 'High':
+        summary_line = "STRONG: Well-positioned for renewable transition."
+    elif rl == 'Medium':
+        summary_line = "DEVELOPING: Moderate readiness with improvement opportunities."
+    else:
+        summary_line = "EMERGING: Foundational infrastructure investment needed."
 
-FEATURE SCORES (0-100)
-{chr(10).join(["  " + c.replace("_"," ").replace("log ","").title().ljust(35) + " " + str(round(fn[c],1)) for c in FEATURE_COLS])}
-
-SUMMARY
-{('STRONG: Well-positioned for renewable transition.') if rl=='High' else
- ('DEVELOPING: Moderate readiness with improvement opportunities.') if rl=='Medium' else
- ('EMERGING: Foundational infrastructure investment needed.')}
-================================================================================
-"""
+    report_txt = "================================================================================\n"
+    report_txt += f"  RENEWABLE ENERGY READINESS REPORT — {rc.upper()}\n"
+    report_txt += f"  Generated: {datetime.now().strftime('%B %d, %Y')} | Theme: {chosen_theme}\n"
+    report_txt += "================================================================================\n"
+    report_txt += f"Country:      {rc}\n"
+    report_txt += f"Score:        {rr['readiness_score']:.1f}/100\n"
+    report_txt += f"Readiness:    {rl}\n"
+    report_txt += f"Global Rank:  #{rnk} of {len(df)}\n"
+    report_txt += f"Confidence:   {rr['prediction_confidence']*100:.0f}%\n"
+    report_txt += "\nINDICATORS\n"
+    report_txt += f"GDP/Capita:   ${np.expm1(rr['log_gdp_per_capita']):,.0f}\n"
+    report_txt += f"Electricity:  {rr['electricity_access_pct']:.1f}%\n"
+    report_txt += f"Renewable:    {rr['renewable_share_pct']:.1f}%\n"
+    report_txt += f"Urban Pop:    {rr['urban_population_pct']:.1f}%\n"
+    report_txt += "\nFEATURE SCORES (0-100)\n"
+    report_txt += feature_lines
+    report_txt += "\nSUMMARY\n"
+    report_txt += summary_line + "\n"
+    report_txt += "================================================================================\n"
     d1,d2,d3=st.columns(3)
     with d1:
         st.download_button("⬇️ TXT Report",report_txt,
