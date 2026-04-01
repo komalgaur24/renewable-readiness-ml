@@ -4,7 +4,7 @@
 An end-to-end Machine Learning system that predicts how ready a country is to adopt renewable energy.
 
 ## 🔹 Live Demo
-👉 [Coming Soon - Streamlit Deploy Link]
+👉 https://renewable-readiness-ml.streamlit.app/
 
 ## 🔹 Problem
 Countries don't adopt renewable energy equally due to:
